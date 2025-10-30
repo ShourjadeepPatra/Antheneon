@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play Game | Web Arcade</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>🎮 Arcade</h2>
+    <ul>
+      <li><a href="menu.html">🏠 Home</a></li>
+      <li><a href="game.html?game=snake">🐍 Snake</a></li>
+      <li><a href="game.html?game=pong">🏓 Pong</a></li>
+      <li><a href="game.html?game=racer">🚗 Racer</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="login.html" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Area -->
+  <div class="main">
+    <div class="topbar">
+      <h1 id="gameTitle">Loading Game...</h1>
+      <div class="controls">
+        <label>🔊 Volume</label>
+        <input type="range" id="volume" min="0" max="100" />
+      </div>
+    </div>
+
+    <div class="game-container">
+      <iframe 
+        id="gameFrame"
+        width="800"
+        height="600"
+        allowfullscreen
+        allowtransparency="true"
+        frameborder="0"
+        scrolling="no"
+      ></iframe>
+    </div>
+  </div>
+
+  <script>
+    //  Load game based on query string (like ?game=snake)
+    const params = new URLSearchParams(window.location.search);
+    const game = params.get("game");
+    const frame = document.getElementById("gameFrame");
+    const title = document.getElementById("gameTitle");
+
+    //  Games dictionary (replace links with your Scratch project URLs)
+    const games = {
+      snake: { 
+        title: "🐍 Snake Game", 
+        url: "/Snake.py.spec" 
+      },
+      pong: { 
+        title: "🏓 Pong Game", 
+        url: "/Pong_Game.spec" 
+      },
+      racer: { 
+        title: "🚗 Racer Game", 
+        url: "/Racing.spec" 
+      },
+    };
+
+    //  Display selected game or error
+    if (games[game]) {
+      title.textContent = games[game].title;
+      frame.src = games[game].url;
+    } else {
+      title.textContent = "⚠️ Game Not Found!";
+      frame.remove();
+    }
+
+    //  Volume Control System (syncs with localStorage)
+    const volume = document.getElementById("volume");
+    const savedVol = localStorage.getItem("volume") || 50;
+    volume.value = savedVol;
+
+    volume.addEventListener("input", () => {
+      localStorage.setItem("volume", volume.value);
+    });
+
+    //  Theme setup
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") document.body.classList.add("light-mode");
+
+    // Logout
+    function logout() {
+      localStorage.removeItem("username");
+    }
+  </script>
+</body>
+</html>

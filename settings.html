@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings | Web Arcade</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>🎮 Arcade</h2>
+    <ul>
+      <li><a href="menu.html">🏠 Home</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="login.html" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <h2>Settings</h2>
+    <div class="settings-box">
+      <label>🎨 Theme Mode:</label>
+      <button id="toggleTheme">Toggle Dark/Light</button>
+      <br><br>
+      <label>🔊 Default Volume:</label>
+      <input type="range" id="volumeControl" min="0" max="100" />
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("toggleTheme");
+    const body = document.body;
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") body.classList.add("light-mode");
+
+    toggle.addEventListener("click", () => {
+      body.classList.toggle("light-mode");
+      localStorage.setItem("theme", body.classList.contains("light-mode") ? "light" : "dark");
+    });
+
+    const volume = document.getElementById("volumeControl");
+    volume.value = localStorage.getItem("volume") || 50;
+    volume.addEventListener("input", () => {
+      localStorage.setItem("volume", volume.value);
+    });
+
+    function logout() {
+      localStorage.removeItem("username");
+    }
+  </script>
+</body>
+</html>

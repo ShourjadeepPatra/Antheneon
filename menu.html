@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main Menu | Web Arcade</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>🎮 Arcade</h2>
+    <ul>
+      <li><a href="menu.html">🏠 Home</a></li>
+      <li><a href="game.html?game=snake">🐍 Snake</a></li>
+      <li><a href="game.html?game=pong">🏓 Pong</a></li>
+      <li><a href="game.html?game=racer">🚗 Racer</a></li>
+      <li><a href="settings.html">⚙️ Settings</a></li>
+      <li><a href="login.html" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h1 id="welcomeText">Welcome to the Web Arcade!</h1>
+      <div class="controls">
+        <label>🔊 Volume</label>
+        <input type="range" id="volume" min="0" max="100" value="50" />
+      </div>
+    </div>
+
+    <div class="game-section">
+      <h2>Choose a game to start playing 🎯</h2>
+      <div class="game-grid">
+        <div class="game-card">
+         <img src="images/snake.jpg" alt="Snake Game">
+         <h3>🐍 Snake</h3>
+         <p>Classic Snake! Collect dots, avoid walls.</p>
+         <a href="game.html?game=snake" class="btn">Play Now</a>
+          </div>
+
+         <div class="game-card">
+        <img src="images/pong.jpg" alt="Pong Game">
+       <h3>🏓 Pong</h3>
+   <p>2 Player Ping Pong challenge!</p>
+  <a href="game.html?game=pong" class="btn">Play Now</a>
+</div>
+
+<div class="game-card">
+  <img src="images/racer.jpg" alt="Racer Game">
+  <h3>🚗 Racer</h3>
+  <p>Race through traffic and test reflexes!</p>
+  <a href="game.html?game=racer" class="btn">Play Now</a>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  //  Load saved theme first
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") document.body.classList.add("light-mode");
+
+  //  Show username
+  const name = localStorage.getItem("username");
+  if (name) document.getElementById("welcomeText").textContent = `Welcome, ${name}!`;
+
+  //  Load & save volume
+  const volume = document.getElementById("volume");
+  const savedVolume = localStorage.getItem("volume") || 50;
+  volume.value = savedVolume;
+
+  volume.addEventListener("input", () => {
+    localStorage.setItem("volume", volume.value);
+  });
+
+  // Logout function
+  function logout() {
+    localStorage.removeItem("username");
+  }
+</script>
+</body>
+</html>
